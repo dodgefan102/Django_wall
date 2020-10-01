@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/wall.css' %}">
+    <title>Success</title>
+</head>
+<body>
+    <div class="header">
+        <a style="float: right;" href="/logout">Log Out</a>
+        <h1>Welcome, {{ user.first_name }} {{ user.last_name }} </h1>
+        <p>Successfully {{ action }}</p>
+    </div>
+    <div class="body">
+        <form action="/wall/post" method="POST" class="blogpost">
+            {% csrf_token %}
+            <textarea name="text"></textarea>
+            <button type="submit" value="{{ user.id }}" name="user_id">POST</button>
+        </form>
+        {% for i in posts %}
+            <div class="post">
+                <p class="title">{{ i.user.first_name }} {{ i.user.last_name }} - {{ i.updated_at }}</p>
+                <p class="text">- {{ i.text }}</p>
+                {% if i.user == user %}
+                    <form action="/wall/postdelete" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="post_id" value="{{ i.id }}">DELETE</button>
+                    </form>
+                {% endif %}
+            </div>
+            {% for j in i.comments.all %}
+                <div class="comment">
+                    <p class="title">{{ j.user.first_name }} {{ j.user.last_name }} - {{ j.updated_at }}</p>
+                    <p class="text">- {{ j.text }}</p>
+                    {% if j.user == user %}
+                        <form action="/wall/comdelete" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="com_id" value='{{j.id}}'>DELETE</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <form action='/wall/comment' method="POST" class="commentpost">
+                {% csrf_token %}
+                <textarea name='text'></textarea>
+                <button type="submit" value="{{ i.id }}" name="blog_id">COMMENT</button>
+            </form>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/style.css' %}">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="registration">
+        <h1>Registration</h1>
+        <form action="/register" method="POST">
+            {% csrf_token %}
+            <table>
+                <th>
+                    <tr>First Name:</tr>
+                    <tr><input type="text" name="fname"></tr>
+                </th>
+                <th>
+                    <tr>Last Name:</tr>
+                    <tr><input type="text" name="lname"></tr>
+                </th>
+                <th>
+                    <tr>Email:</tr>
+                    <tr><input type="text" name="email"></tr>
+                </th>
+                <th>
+                    <tr>Password:</tr>
+                    <tr><input type="password" name="pw"></tr>
+                </th>
+                <th>
+                    <tr>Confirm PW:</tr>
+                    <tr><input type="password" name="cpw"></tr>
+                </th>
+            </table>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <div class="errors">
+        {% if messages %}
+            <ul>
+                {% for i in messages %}
+                    <li>{{ i }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="login">
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+            {% csrf_token %}
+            <table>
+                <th>
+                    <tr>Email:</tr>
+                    <tr><input type="email" name="email"></tr>
+                </th>
+                <th>
+                    <tr>Password:</tr>
+                    <tr><input type="password" value='' name="pw"></tr>
+                </th>
+            </table>
+            <button type="submit">Log In</button>
+        </form>
+
+    </div>
+</body>
+</html>

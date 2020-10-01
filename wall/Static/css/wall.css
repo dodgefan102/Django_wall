@@ -1,0 +1,31 @@
+.blogpost{
+    width: fit-content;
+    min-height: 150px;
+    text-align: center;
+}
+textarea{
+    margin: 5px;
+    width: 95%;
+    min-height: 100px;
+}
+.post{
+    display: flex;
+    align-items: center;
+}
+.comment{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 50px;
+}
+.commentpost{
+    margin-left: 50px;
+}
+.title{
+    font-weight: bold;
+}
+.commentpost button{
+    float: right;
+}
+
+
